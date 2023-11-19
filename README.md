@@ -9,7 +9,24 @@ Este repositório contém uma aplicação simples que utiliza a câmera do celul
 4. [Criando GridView](#gridview)
 5. [Utilizando GridView](#put-images)
 
-   
+## Permissões
+
+Para retirar fotos, acessar a galeria e listar imagens em seu app, é necessário modificar o arquivo `AndroidManifest.xml` com as seguintes permissôes:
+
+```xml
+
+ <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+
+```
+
 <a id="cam"></a>
 ## 1. Capturando imagens pela camêra
 
@@ -239,7 +256,7 @@ Portanto, o método saveImg realiza o processo completo de salvar uma imagem no 
 ## 4. Criando GridView
 
 
-Para criar o GridView é preciso criar no diretório `Layout` um arquivo XML( ex: `activity_main.xml`) , e colocar dentro do layout(`activity_main.xml`) um elemento do tipo GridView. O GridView serve para organiza itens. Seguindo uma organização tabular, contendo um numero especifico de colunas. Assim os itens são distribuídos automaticamente para preencher as linhas e colunas disponíveis, sendo quê, o GridView já  possui suporte integrado para rolagem de tela quando o número de itens é maior do que pode ser exibido em uma única tela. Para que essa organização ocorra, é necessario utilizar alguns atributos XML. 
+Para criar o GridView é preciso criar no diretório `Layout` um arquivo XML( ex: `activity_main.xml`), e colocar dentro do layout(`activity_main.xml`) um elemento do tipo GridView. O GridView serve para organiza itens. Seguindo uma organização tabular, contendo um número específico de colunas. Assim os itens são distribuídos automaticamente para preencher as linhas e colunas disponíveis, sendo quê, o GridView já  possui suporte integrado para rolagem de tela quando o número de itens é maior do que pode ser exibido em uma única tela. Para que essa organização ocorra, é necessário utilizar alguns atributos XML. 
 
 * `android:id="@+id/GridView" `:
         Define um identificador único para o GridView. Esse id `GridView` é utilizado para referenciar o GridView.
@@ -282,7 +299,7 @@ Para criar o GridView é preciso criar no diretório `Layout` um arquivo XML( ex
 <a id="put-images"></a>
 ## 5. Utilizando GridView
 
-Para utilizar o GridView é necessário criar dois arquivos no diretório `Layout`. O primeiro é o arquivo XML(`activity_main.xml`) contendo o elemento GridView e logo após, é preciso criar um outro arquivo XML( ex: `photos_list.xml` ) para descrever como cada item deve ser exibido. Este arquivo contém o layout de cada item individual que será apresentado dentro do GridView. Neste caso, precisamos apresentar imagens, então o arquivo secundário( `photos_list.xml` ),deve conter a representação de elemento do tipo ImageView.    
+Para utilizar o GridView é necessário criar dois arquivos no diretório `Layout`. O primeiro é o arquivo XML(`activity_main.xml`) contendo o elemento GridView e logo após, é preciso criar um outro arquivo XML( ex: `photos_list.xml` ) para descrever como cada item deve ser exibido. Este arquivo contém o layout de cada item individual que será apresentado dentro do GridView. Neste caso, precisamos apresentar imagens, então o arquivo secundário( `photos_list.xml` ) deve conter a representação de elemento do tipo ImageView.    
 <br>
 
 * `android:id="@+id/idImage`:
@@ -312,13 +329,13 @@ Para utilizar o GridView é necessário criar dois arquivos no diretório `Layou
 ```
 <br>
 
-Para que o GridView e layout custumizado seja utilizados em conjunto, é preciso criar um adaptador. Ou seja, Para apresentar dados em um GridView no Android, é necessário utilizar um Adapter. O Adapter é responsável por fornecer os dados ao GridView e também por criar as visualizações individuais (células) que serão exibidas na grade. O uso de um Custom Adapter é comum quando é preciso personalizar a aparência ou o comportamento das células do GridView. 
+Para que o GridView e layout custumizado seja utilizados em conjunto, é preciso criar um adaptador. Ou seja, para apresentar dados em um GridView no Android, é necessário utilizar um Adapter. O Adapter é responsável por fornecer os dados ao GridView e também por criar as visualizações individuais (células) que serão exibidas na grade. O uso de um Custom Adapter é comum quando é preciso personalizar a aparência ou o comportamento das células do GridView. 
 <br>
-Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . Para boas praticas, é interessante criar uma diretorio(ex: `adapter`) e colocar o arquivo.
+Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . Para boas práticas, é interessante criar uma diretório(ex: `adapter`) e colocar o arquivo.
 <br>
 
 * `public class CustomAdapter extends BaseAdapter {`:
-        a classe CustomAdapter herda herdar da classe BaseAdapter, que contem métodos e comportamentos específicos para a criação de adaptadores de lista personalizados. Isso permite utilizar métodos específicos na classe CustomAdapter para personalizar o comportamento conforme necessário.
+        A classe `CustomAdapter` herda da classe `BaseAdapter`, que contem métodos e comportamentos específicos para a criação de adaptadores de lista personalizados. Isso permite utilizar métodos específicos na classe CustomAdapter para personalizar o comportamento conforme necessário.
 
 * Variáveis de Instância:
   
@@ -390,7 +407,7 @@ Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . 
 <br>
 
 
-Apos a criação dos arquivos, será necesário pegar o caminho das imagens da memória externa. No arquivo `MainActivity.java` é preciso criar uma função para pegar o caminho das iamgens.
+Após a criação dos arquivos, será necesário pegar o caminho das imagens da memória externa. No arquivo `MainActivity.java` é preciso criar uma função para pegar o caminho das iamgens.
 
 
    * `private ArrayList<String> getImagesFromMediaStore(Context context) {`:
@@ -400,7 +417,7 @@ Apos a criação dos arquivos, será necesário pegar o caminho das imagens da m
       Criando uma ArrayList chamada `imagePaths` para armazenar os caminhos dos arquivos de imagem.
      
    * `String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};`:
-      O array `projectio`n especifica quais colunas devem ser recuperadas do `MediaStore`. No caso, são o `ID` e o caminho do arquivo ( `DATA` ) da imagem.
+      O array `projection` especifica quais colunas devem ser recuperadas do `MediaStore`. No caso, são o `ID` e o caminho do arquivo ( `DATA` ) da imagem.
 
    * `String sortOrder = MediaStore.Images.Media.DATE_ADDED + " DESC";`:
       Define a ordenação dos resultados da consulta pelo campo `DATE_ADDED` em ordem decrescente, ou seja, as imagens mais recentes primeiro.
@@ -424,11 +441,47 @@ Apos a criação dos arquivos, será necesário pegar o caminho das imagens da m
       Retorna a `ArrayList` contendo os caminhos dos arquivos de imagem.
  <br>
 
-Agora, ainda no arquivo (`MainActivity.java`),  declarada uma variável do tipo GridView, identifique o elemento GridView do layout() e configure um adaptador personalizado (CustomAdapter) para a GridView. 
 
-* Declaração de variável: `GridView gridView;`.
-* Identificando o elemento : `GridView = findViewById(R.id.GridView);`, atraves do  id GridView que está no arquivo XML `activity_main.xml`.
-* um adaptador personalizado (CustomAdapter) configurado para a GridView.: `gridView.setAdapter(new CustomAdapter(this, getImagesFromMediaStore(getApplicationContext())));`
+```java
+
+    private ArrayList<String> getImagesFromMediaStore(Context context) {
+        ArrayList<String> imagePaths = new ArrayList<>();
+
+        String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};
+
+        String sortOrder = MediaStore.Images.Media.DATE_ADDED + " DESC";
+
+        try (Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                sortOrder
+        )) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+
+                do {
+                    String imagePath = cursor.getString(dataColumnIndex);
+                    imagePaths.add(imagePath);
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return imagePaths;
+    }
+
+
+```
+
+ <br>
+ 
+
+Agora, ainda no arquivo (`MainActivity.java`),  declarada uma variável do tipo GridView, identifique o elemento GridView do layout( `activity_main.xml` ) e configure um adaptador personalizado (CustomAdapter) para a GridView. 
+
+* Declaração de atributo: `GridView gridView;`.
+* Identificando o elemento : `GridView = findViewById(R.id.GridView);`, através do id GridView que está no arquivo XML `activity_main.xml`.
+* Adaptador personalizado (CustomAdapter) configurado para a GridView.: `gridView.setAdapter(new CustomAdapter(this, getImagesFromMediaStore(getApplicationContext())));`
 
 
 
