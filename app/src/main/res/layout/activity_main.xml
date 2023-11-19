@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/Base"
+    android:background="#171717">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnImage"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Capturar"
+        android:textAllCaps="true"
+        app:backgroundTint="#5E5B5B"
+        app:icon="@drawable/baseline_camera_24"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGalery"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@id/btnImage"
+        android:gravity="center"
+        android:text="Galeria"
+        android:textAllCaps="true"
+        app:backgroundTint="#5E5B5B"
+        app:icon="@drawable/baseline_photo_camera_back_24"
+        app:iconGravity="textStart"
+        app:iconPadding="10dp"
+        app:iconTint="@color/white" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/ClickImage"-->
+<!--        android:layout_below="@id/btnImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp" />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/ClickImage"-->
+<!--        android:text="Buctea"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:id="@+id/test"/>-->
+
+    <GridView
+        android:id="@+id/GridView"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="15dp"
+        android:verticalSpacing="15dp"
+        android:layout_below="@id/btnImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"/>
+
+</RelativeLayout>
+
+
