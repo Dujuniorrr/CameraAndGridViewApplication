@@ -1,8 +1,12 @@
 # Capturando Imagens e Listando com GridView
 
+## Sumário
+1. [Capturando imagens pela camêra](#cam)
+2. [Carregando imagens da galeria](#galery)
+3. [Salvando imagens](#save)
+4. [Utilizando GriView](#gridview)
+5. [Carregando imagens no GriView](#put-images)
 
-
-Take me to [pookie](#pookie)
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<a id="pookie"></a>
-AAAAAAAAAAAAA
+   
+<a id="cam"></a>
+### Capturando imagens pela camêra
