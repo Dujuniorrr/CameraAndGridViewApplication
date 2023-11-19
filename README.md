@@ -407,7 +407,7 @@ Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . 
 <br>
 
 
-Após a criação dos arquivos, será necesário pegar o caminho das imagens da memória externa. No arquivo `MainActivity.java` é preciso criar uma função para pegar o caminho das iamgens.
+Após a criação dos arquivos, será necesário pegar o caminho das imagens da memória externa. No arquivo `MainActivity.java` é preciso criar uma função para pegar o caminho das imagens.
 
 
    * `private ArrayList<String> getImagesFromMediaStore(Context context) {`:
@@ -423,6 +423,7 @@ Após a criação dos arquivos, será necesário pegar o caminho das imagens da 
       Define a ordenação dos resultados da consulta pelo campo `DATE_ADDED` em ordem decrescente, ou seja, as imagens mais recentes primeiro.
 
   * `try (Cursor cursor = context.getContentResolver().query( MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, sortOrder)){`:
+    
       - O bloco try-with-resources é usado para abrir o cursor e garantir seu fechamento automático quando não for mais necessário.
       - `getContentResolver()` é utilizado para obter o resolvedor de conteúdo do contexto.
       - `query()` é chamado para executar a consulta no`MediaStore`, utilizando a `URI` das imagens na memória externa, as colunas definidas em projection, sem cláusula `WHERE` ( `null` ), sem argumentos de seleção ( `null` ), e com a ordenação definida.
