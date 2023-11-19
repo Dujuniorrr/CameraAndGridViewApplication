@@ -6,8 +6,8 @@ Este repositório contém uma aplicação simples que utiliza a câmera do celul
 1. [Capturando imagens pela camêra](#cam)
 2. [Carregando imagens da galeria](#galery)
 3. [Salvando imagens](#save)
-4. [Utilizando GridView](#gridview)
-5. [Carregando imagens no GridView](#put-images)
+4. [Criando GridView](#gridview)
+5. [Utilizando GridView](#put-images)
 
    
 <a id="cam"></a>
@@ -235,6 +235,209 @@ Portanto, o método saveImg realiza o processo completo de salvar uma imagem no 
 <br>
 
 <a id="gridview"></a>
-## 4. Utilizando GridView
+
+## 4. Criando GridView
+
+
+Para criar o GridView é preciso criar no diretório `Layout` um arquivo XML( ex: `activity_main.xml`) , e colocar dentro do layout(`activity_main.xml`) um elemento do tipo GridView. O GridView serve para organiza itens. Seguindo uma organização tabular, contendo um numero especifico de colunas. Assim os itens são distribuídos automaticamente para preencher as linhas e colunas disponíveis, sendo quê, o GridView já  possui suporte integrado para rolagem de tela quando o número de itens é maior do que pode ser exibido em uma única tela. Para que essa organização ocorra, é necessario utilizar alguns atributos XML. 
+
+* `android:id="@+id/GridView" `:
+        Define um identificador único para o GridView. Esse id `GridView` é utilizado para referenciar o GridView.
+
+* `android:layout_margin="10dp"`:
+        Define uma margem de `10dp` em todos os lados do GridView. A margem é o espaço em branco ao redor do GridView.
+
+* `android:horizontalSpacing="15dp"`:
+        Define um espaçamento horizontal de `15dp` entre os itens do GridView. 
+
+* `android:verticalSpacing="15dp"`:
+        Define um espaçamento vertical de `15dp` entre os itens do GridView.
+
+* `android:layout_width="match_parent"`:
+        Define a largura do GridView para preencher completamente a largura do contêiner pai.
+
+* `android:layout_height="match_parent"`:
+        Define a altura do GridView para preencher completamente a altura do contêiner pai.
+
+* `android:numColumns="3"`:
+        Define o número de colunas no GridView como `3`. Isso significa que haverá `3` itens em cada linha. O GridView organizará automaticamente os itens em colunas e linhas com base nesse número.
+
+<br>
+
+```xml
+
+ <GridView
+        android:id="@+id/GridView"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="15dp"
+        android:verticalSpacing="15dp"
+        android:layout_below="@id/btnImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"/>
+    
+```
+<br>
+
 <a id="put-images"></a>
-## 5. Carregando imagens no GridView
+## 5. Utilizando GridView
+
+Para utilizar o GridView é necessário criar dois arquivos no diretório `Layout`. O primeiro é o arquivo XML(`activity_main.xml`) contendo o elemento GridView e logo após, é preciso criar um outro arquivo XML( ex: `photos_list.xml` ) para descrever como cada item deve ser exibido. Este arquivo contém o layout de cada item individual que será apresentado dentro do GridView. Neste caso, precisamos apresentar imagens, então o arquivo secundário( `photos_list.xml` ),deve conter a representação de elemento do tipo ImageView.    
+<br>
+
+* `android:id="@+id/idImage`:
+        Define um identificador único para a ImageView. Esse ID pode ser usado para referenciar a ImageView em código Java.
+
+* `android:layout_width="100dp" e android:layout_height="100dp"`:
+        Define a largura e altura da `ImageView` como `100dp`. Isso significa que a `ImageView` terá uma largura e altura fixas de `100dp`.
+
+* `android:layout_gravity="center"`:
+        Define a gravidade do layout da `ImageView` como `center`, o que significa que a `ImageView` será centralizada dentro do contêiner que a contém.
+
+* `android:src="@mipmap/ic_launcher"`:
+        Define a fonte da imagem exibida na `ImageView`. Neste caso, a imagem vem do recurso mipmap chamado `ic_launcher`. 
+
+<br>
+
+```xml
+
+ <ImageView
+            android:id="@+id/idImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"
+         />
+    
+```
+<br>
+
+Para que o GridView e layout custumizado seja utilizados em conjunto, é preciso criar um adaptador. Ou seja, Para apresentar dados em um GridView no Android, é necessário utilizar um Adapter. O Adapter é responsável por fornecer os dados ao GridView e também por criar as visualizações individuais (células) que serão exibidas na grade. O uso de um Custom Adapter é comum quando é preciso personalizar a aparência ou o comportamento das células do GridView. 
+<br>
+Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . Para boas praticas, é interessante criar uma diretorio(ex: `adapter`) e colocar o arquivo.
+<br>
+
+* `public class CustomAdapter extends BaseAdapter {`:
+        a classe CustomAdapter herda herdar da classe BaseAdapter, que contem métodos e comportamentos específicos para a criação de adaptadores de lista personalizados. Isso permite utilizar métodos específicos na classe CustomAdapter para personalizar o comportamento conforme necessário.
+
+* Variáveis de Instância:
+  
+   - `Context context`: Armazena o contexto da aplicação Android, fornecendo acesso a recursos e informações globais do aplicativo.
+  
+   - `ArrayList<String> imagePaths`: Mantém uma lista de caminhos das imagens que serão exibidas.
+
+* Construtor:
+   - `public CustomAdapter(Context context, ArrayList<String> imagePaths)`: O construtor da classe. Inicializa as variáveis de instância com os valores passados como parâmetros.
+
+* Métodos de Adapter:
+  
+   -  `getCount()`: Retorna o número de itens na lista, que é o tamanho da lista de caminhos de imagens.
+     
+   - `getItem(int position)`: Retorna o item na posição especificada da lista de caminhos de imagens.
+     
+   - `getItemId(int position)`: Retorna o ID do item na posição especificada. Neste caso, é a própria posição.
+
+* Método `getView()`:
+        Este método é responsável por criar ou reutilizar a View para cada item na lista e configurá-la com os dados apropriados.
+        Utiliza um layout inflado a partir do recurso `R.layout.photos_list`.
+        Carrega a imagem associada à posição atual na `ImageView` usando o caminho da imagem armazenado em imagePaths. A imagem é carregada de forma assíncrona.
+        Verifica se a `convertView` é nula. Se for, cria uma nova View; caso contrário, reutiliza a `convertView`.
+
+* Método `getImageUri()`:
+        Este método obtém a `URI` de uma imagem com base no caminho fornecido usando uma consulta ao provedor de conteúdo do Android ( `MediaStore` ).
+        Usa o caminho da imagem para encontrar o ID correspondente no banco de dados de mídia.
+
+```java
+
+
+  public class CustomAdapter extends BaseAdapter {
+
+    private final Context context;
+    private final ArrayList<String> imagePaths;
+
+    public CustomAdapter(Context context, ArrayList<String> imagePaths) {
+        this.context = context;
+        this.imagePaths = imagePaths;
+    }
+
+    @Override
+    public int getCount() {
+        return imagePaths.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return imagePaths.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ...
+    }
+
+    public static Uri getImageUri(Context context, String imagePath) {
+        ...
+    }
+  }
+
+```
+
+<br>
+
+
+Apos a criação dos arquivos, será necesário pegar o caminho das imagens da memória externa. No arquivo `MainActivity.java` é preciso criar uma função para pegar o caminho das iamgens.
+
+
+   * `private ArrayList<String> getImagesFromMediaStore(Context context) {`:
+      Essa parte do código define uma função chamada `getImagesFromMediaStore` que tem como objetivo obter os caminhos dos arquivos de imagem armazenados no dispositivo Android utilizando o provedor de conteúdo `MediaStore`.
+     
+   * `ArrayList<String> imagePaths = new ArrayList<>();`:
+      Criando uma ArrayList chamada `imagePaths` para armazenar os caminhos dos arquivos de imagem.
+     
+   * `String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA};`:
+      O array `projectio`n especifica quais colunas devem ser recuperadas do `MediaStore`. No caso, são o `ID` e o caminho do arquivo ( `DATA` ) da imagem.
+
+   * `String sortOrder = MediaStore.Images.Media.DATE_ADDED + " DESC";`:
+      Define a ordenação dos resultados da consulta pelo campo `DATE_ADDED` em ordem decrescente, ou seja, as imagens mais recentes primeiro.
+
+  * `try (Cursor cursor = context.getContentResolver().query( MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, sortOrder)){`:
+      - O bloco try-with-resources é usado para abrir o cursor e garantir seu fechamento automático quando não for mais necessário.
+      - `getContentResolver()` é utilizado para obter o resolvedor de conteúdo do contexto.
+      - `query()` é chamado para executar a consulta no`MediaStore`, utilizando a `URI` das imagens na memória externa, as colunas definidas em projection, sem cláusula `WHERE` ( `null` ), sem argumentos de seleção ( `null` ), e com a ordenação definida.
+
+   * `if (cursor != null && cursor.moveToFirst()) { int dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+      do {
+            String imagePath = cursor.getString(dataColumnIndex);
+            imagePaths.add(imagePath);
+        } while (cursor.moveToNext());
+    }`:
+    - Verifica se o cursor não está vazio e move para o primeiro resultado.
+    - Obtém o índice da coluna que contém os caminhos dos arquivos de imagem.
+    - Itera sobre os resultados do cursor, obtendo o caminho do arquivo de imagem e adicionando-o à `ArrayList`.
+
+  * `return imagePaths;`:
+      Retorna a `ArrayList` contendo os caminhos dos arquivos de imagem.
+ <br>
+
+Agora, ainda no arquivo (`MainActivity.java`),  declarada uma variável do tipo GridView, identifique o elemento GridView do layout() e configure um adaptador personalizado (CustomAdapter) para a GridView. 
+
+* Declaração de variável: `GridView gridView;`.
+* Identificando o elemento : `GridView = findViewById(R.id.GridView);`, atraves do  id GridView que está no arquivo XML `activity_main.xml`.
+* um adaptador personalizado (CustomAdapter) configurado para a GridView.: `gridView.setAdapter(new CustomAdapter(this, getImagesFromMediaStore(getApplicationContext())));`
+
+
+
+
+  
+
+
+  
+
+
+
+     
