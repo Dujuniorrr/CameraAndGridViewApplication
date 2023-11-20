@@ -404,7 +404,8 @@ Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . 
 
             final InputStream imageStream;
             try {
-                imageStream = context.getContentResolver().openInputStream(Objects.requireNonNull(getImageUri(context, imagePaths.get(position))));
+                imageStream = context.getContentResolver().openInputStream(Objects.requireNonNull(
+                getImageUri(context, imagePaths.get(position))));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
