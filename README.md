@@ -394,13 +394,56 @@ Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ...
+        View gridView;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if (convertView == null) {
+            gridView = new View(context);
+            gridView = inflater.inflate(R.layout.photos_list, null);
+            ImageView imageView = gridView.findViewById(R.id.idImage);
+//            TextView textView = gridView.findViewById(R.id.textView);
+//            textView.setText(imagePaths.get(position));
+
+
+            final InputStream imageStream;
+            try {
+                imageStream = context.getContentResolver().openInputStream(Objects.requireNonNull(getImageUri(context, imagePaths.get(position))));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            final Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+            imageView.setImageBitmap(bitmap);
+//            Toast.makeText(context, bitmap.toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            gridView = convertView;
+        }
+
+        return gridView;
     }
 
     public static Uri getImageUri(Context context, String imagePath) {
-        ...
+        String[] projection = {MediaStore.Images.Media._ID};
+        String selection = MediaStore.Images.Media.DATA + " = ?";
+        String[] selectionArgs = new String[]{imagePath};
+
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                selection,
+                selectionArgs,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int idColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            long id = cursor.getLong(idColumnIndex);
+            cursor.close();
+            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Long.toString(id));
+        }
+
+        return null;
     }
-  }
+}
 
 ```
 
