@@ -401,9 +401,6 @@ Custom Adapter é caraterizado como um arquivo java(ex: `CustomAdapter.java`) . 
             gridView = new View(context);
             gridView = inflater.inflate(R.layout.photos_list, null);
             ImageView imageView = gridView.findViewById(R.id.idImage);
-//            TextView textView = gridView.findViewById(R.id.textView);
-//            textView.setText(imagePaths.get(position));
-
 
             final InputStream imageStream;
             try {
